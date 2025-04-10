@@ -85,7 +85,7 @@ int adicionaElemento(Lista *lista, int elemento) {
 }
 
 int inserirItem(Lista *lista, int elemento) {
-	printf("Perfeito, me diga o elemento que será adicionado na Lista: ");
+	printf("\nPerfeito, me diga o elemento que será adicionado na Lista: ");
 	scanf("%d",&elemento);
 	return adicionaElemento(lista, elemento);
 }
@@ -106,7 +106,7 @@ int removeElemento(Lista *lista, int indice) {
 }
 
 int removerItem(Lista *lista, int indice) {
-	printf("Perfeito, me diga o índice que será removido da Lista: ");
+	printf("\nPerfeito, me diga o índice que será removido da Lista: ");
 	scanf("%d",&indice);
 	return removeElemento(lista, indice);
 }
@@ -125,7 +125,7 @@ void imprimiLista(Lista *lista) {
 }
 
 void exibirLista(Lista *lista) {
-	printf("Aqui está sua lista atual:\n");
+	printf("\nAqui está sua lista atual:\n");
 	imprimiLista(lista);
 }
 
@@ -139,7 +139,7 @@ int pesquisarElemento(Lista *lista, int elemento) {
 }
 
 int pesquisarItem(Lista *lista, int elemento) {
-	printf("Perfeito, me diga qual elemento você deseja pesquisar na Lista: ");
+	printf("\nPerfeito, me diga qual elemento você deseja pesquisar na Lista: ");
 	scanf("%d",&elemento);
 	return pesquisarElemento(lista, elemento);
 }
@@ -148,12 +148,51 @@ int pesquisarItem(Lista *lista, int elemento) {
 
 void printarErro(int indiceErro) {
 	if(indiceErro == 0) {
-		printf("Não há espaço para novo item.\nCAPACIDADE MÁXIMA = %d\n",CAPACIDADE);
+		printf("\nNão há espaço para novo item.\nCAPACIDADE MÁXIMA = %d\n",CAPACIDADE);
 	} else if(indiceErro == 1) {
-		printf("Índice fora de alcance.\n");
+		printf("\nÍndice fora de alcance.\n");
 	} else if(indiceErro == 2) {
-		printf("Elemento não pôde ser encontrado no Vetor");
+		printf("\nElemento não pôde ser encontrado no Vetor");
 	}
+}
+
+void intercala(int *vetor, int inicio, int meio, int final) {
+
+	int auxVet[final];
+	int auxVar = final;
+
+	for(int i = inicio; i <= meio; i++) {
+		auxVet[i] = vetor[i];
+	}
+
+	for(int i = meio + 1; i <= final; i++) {
+		auxVet[i] = vetor[auxVar];
+		auxVar--;
+	}
+
+	int esquerda = inicio;
+	int direita = final;
+
+	for(int i = inicio; i <= final; i++) {
+		if(auxVet[esquerda] <= auxVet[direita]) {
+			vetor[i] = auxVet[esquerda];
+			esquerda++;
+		} else {
+			vetor[i] = auxVet[direita];
+			direita--;
+		}
+	}
+}
+
+void mergeSort(int *vetor, int inicio, int final) {
+
+	if (inicio >= final)
+		return;
+
+	int meio = (inicio + final) / 2;
+	mergeSort(vetor,inicio,meio);
+	mergeSort(vetor,meio + 1, final);
+	intercala(vetor,inicio,meio,final);
 
 }
 
@@ -184,14 +223,14 @@ int main() {
 			if (inserirItem(&minhaLista, auxiliar) == 0)
 				printarErro(0);
 			else
-				printf("Elemento adicionado com sucesso");
+				printf("\nElemento adicionado com sucesso");
 			break;
 
 		case 2:
 			if (removerItem(&minhaLista, auxiliar) == 0)
 				printarErro(1);
 			else
-				printf("Elemento no índice %d removido com sucesso",auxiliar);
+				printf("\nElemento no índice %d removido com sucesso",auxiliar);
 			break;
 
 		case 3:
@@ -203,14 +242,16 @@ int main() {
 			if (auxiliar == -1)
 				printarErro(2);
 			else
-				printf("O elemento que você pesquisou está no índice [%d]",auxiliar);
+				printf("\nO elemento que você pesquisou está no índice [%d]",auxiliar);
 			break;
 
 		case 5:
+			mergeSort(minhaLista.elementos,0,minhaLista.tamanho-1);
+			printf("\nVetor Ordenado de forma Crescente.");
 			break;
 
 		case 6:
-			printf("Encerrando Programa...");
+			printf("\nEncerrando Programa...");
 			break;
 
 		default:
