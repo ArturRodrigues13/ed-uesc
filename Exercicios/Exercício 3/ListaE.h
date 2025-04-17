@@ -8,14 +8,14 @@
 
 
 /********************************************************************
- * Este arquivo cont�m c�digo para manipular uma lista encadeada de itens.
- * Um item � uma estrutura do tipo tpItem definida pelo usu�rio em um arquivo .h nomeado de Item.h.
- * Uma lista encadeada � um ponteiro para um n�. Um n� possui dois campos:
+ * Este arquivo contém código para manipular uma lista encadeada de itens.
+ * Um item é uma estrutura do tipo tpItem definida pelo usuário em um arquivo .h nomeado de Item.h.
+ * Uma lista encadeada é um ponteiro para um nó. Um nó possui dois campos:
  * a) um campo do tipo tpItem;
- * b) um ponteiro para o pr�ximo n�;
+ * b) um ponteiro para o próximo nó;
  *
  * Obs:
- * -> O tipo tpItem deve conter obrigat�riamente um campo nomeado de id do tipo unsigned int.
+ * -> O tipo tpItem deve conter obrigatóriamente um campo nomeado de id do tipo unsigned int.
  *
  */
 
@@ -29,21 +29,21 @@ typedef  struct Celula tpNo;
  */
 tpNo * initLstE();
 /**
- * @param lst = uma Lista de itens;
- * @param item= um item a ser inserido em lst
+ * @param lst uma Lista de itens;
+ * @param item um item a ser inserido em lst
  * @return a lista se o item foi inserido em lst ou NULL caso contrário.
  */
 tpNo*insertLstE(tpNo *lst, tpItem item);
 //-----------------------------------------------------------------------------
 /**
- * @param lst = uma Lista de itens;
+ * @param lst uma Lista de itens;
  * @return retorna o item da primeira posição de lst ou NULL caso contrário.
  */
 tpItem  getE(tpNo *lst);
 //-----------------------------------------------------------------------------
 /**
  * Exibe no monitor os itens da lista.
- * @param lst = uma Lista de itens;
+ * @param lst uma Lista de itens;
  * @return
  */
 void printLstE(tpNo *lst);
@@ -51,21 +51,24 @@ void printLstE(tpNo *lst);
 //-----------------------------------------------------------------------------
 /**
  * Verifica se a lista está vazia.
- * @param lst = uma Lista de itens;
+ * @param lst uma Lista de itens;
  * @return true se lst vazia ou false caso contrário.
  */
 booleano isEmptyLstE(tpNo *lst);
 
 //-----------------------------------------------------------------------------
 /**
- * Verifica se a lista está vazia.
- * @param lst = uma Lista de itens;
- * @param id = � o identificador que será buscado em lst.
+ * Pesquisa um item na Lista de acordo com o identificador.
+ * @param lst uma Lista de itens;
+ * @param id é o identificador que será buscado em lst.
  * @return o item com o id ou NULL se não for encontrado.
  */
 tpItem *searchItemLstE(tpNo *lst, unsigned int id);
 
+//-----------------------------------------------------------------------------
 
+tpNo* removeItemLstEAux(tpNo **noAtual, unsigned int id);
 
-#include "ListaE.c"
+tpNo* removeItemLstE(tpNo **noAnterior, tpNo **noAtual, unsigned int id);
+
 #endif // LISTAE_H_INCLUDED

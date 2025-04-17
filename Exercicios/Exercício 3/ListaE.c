@@ -1,19 +1,19 @@
 /********************************************************************
- * Este arquivo cont�m c�digo para manipular uma lista encadeada de itens.
- * Um item � uma estrutura definida pelo usu�rio da biblioteca ListaE.h.
- * Uma lista encadeada � um ponteiro para um n�. Um n� possui dois campos:
+ * Este arquivo contém código para manipular uma lista encadeada de itens.
+ * Um item é uma estrutura definida pelo usuário da biblioteca ListaE.h.
+ * Uma lista encadeada é um ponteiro para um nó. Um nó possui dois campos:
  * a) um campo do tipo tpItem;
- * b) um ponteiro para o pr�ximo n�;
+ * b) um ponteiro para o próximo nó;
  *
  * Obs:
- * -> O tipo tpItem deve conter obrigat�riamente um campo nomeado de id do tipo unsigned int.
+ * -> O tipo tpItem deve conter obrigatóriamente um campo nomeado de id do tipo unsigned int.
  *
  */
 #include "ListaE.h"
 //-----------------------------------------------------------------------------
 struct Celula {
-       tpItem    item;
-       struct Celula  *prox;
+       tpItem item;
+       struct Celula *prox;
 };
 
 typedef  struct Celula tpNo;
@@ -22,17 +22,17 @@ typedef  struct Celula tpNo;
  * @param .
  * @return a lista inicializada com o ponteiro apontando para NULL;
  */
-tpNo * initLstE(){
+tpNo* initLstE(){
     tpNo *lst = NULL;
     return lst;
 }
 
 /**
- * @param lst = uma Lista de itens;
- * @param item= um item a ser inserido em lst
- * @return a lista se o item foi inserido em lst ou NULL caso contr�rio.
+ * @param lst uma Lista de itens;
+ * @param item um item a ser inserido em lst
+ * @return a lista se o item foi inserido em lst ou NULL caso contrário.
  */
-tpNo *insertLstE(tpNo *lst, tpItem item){
+tpNo* insertLstE(tpNo *lst, tpItem item){
     tpNo *no = (tpNo*)malloc(sizeof(tpNo));
    	if (no !=NULL){
 		no->item = item;
@@ -44,8 +44,8 @@ tpNo *insertLstE(tpNo *lst, tpItem item){
 }
 //-----------------------------------------------------------------------------
 /**
- * @param lst = uma Lista n�o vazia de itens;
- * @return retorna o item da primeira posi��o de lst.
+ * @param lst uma Lista não vazia de itens;
+ * @return retorna o item da primeira posição de lst.
  */
 tpItem  getE(tpNo *lst){
        return lst->item;
@@ -55,7 +55,7 @@ tpItem  getE(tpNo *lst){
 //-----------------------------------------------------------------------------
 /**
  * Exibe no monitor os itens da lista.
- * @param lst = uma Lista de itens;
+ * @param lst uma Lista de itens;
  * @return
  */
 void printLstE(tpNo *lst){
@@ -71,7 +71,7 @@ void printLstE(tpNo *lst){
 //-----------------------------------------------------------------------------
 /**
  * Verifica se a lista está vazia.
- * @param lst = uma Lista de itens;
+ * @param lst uma Lista de itens;
  * @return true se lst vazia ou false caso contrário.
  */
 booleano isEmptyLstE(tpNo *lst){
@@ -81,12 +81,12 @@ booleano isEmptyLstE(tpNo *lst){
 
 //-----------------------------------------------------------------------------
 /**
- * Verifica se a lista está vazia.
- * @param lst = uma Lista de itens;
- * @param id = � o identificador que será buscado em lst.
+ * Procurar na Lista por algum item que tenha o indentificador fornecido.
+ * @param lst uma Lista de itens;
+ * @param id é o identificador que será buscado em lst.
  * @return o item na lista com o id ou NULL se não for encontrado.
  */
-tpItem * searchItemLstE(tpNo *lst, unsigned int id){
+tpItem* searchItemLstE(tpNo *lst, unsigned int id){
     if  (lst != NULL){
         if (lst->item.id == id){
             return &(lst->item);
@@ -95,4 +95,35 @@ tpItem * searchItemLstE(tpNo *lst, unsigned int id){
         }
     }
     return NULL;
+}
+
+//-----------------------------------------------------------------------------
+
+tpNo* removeItemLstEAux(tpNo **noAtual, unsigned int id){
+    return removeItemLstE(NULL, noAtual, id);
+}
+
+tpNo* removeItemLstE(tpNo **noAnterior, tpNo **noAtual, unsigned int id){
+    printf("a");
+    if(*noAtual == NULL){
+        printf("b");
+        return NULL;
+    }
+
+    if((*noAtual)->item.id == id){
+        printf("c");
+        if(noAnterior == NULL){
+            printf("d");
+            *noAtual = (*noAtual)->prox;
+            return *noAtual;
+        }
+        else{
+            printf("e");
+            return (*noAnterior)->prox = (*noAtual)->prox;
+        }
+    }
+    else{
+        printf("f");
+        return removeItemLstE(noAtual, &((*noAtual)->prox), id);
+	}
 }

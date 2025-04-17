@@ -1,0 +1,47 @@
+Respostas
+
+Parte 1:
+
+Questão 3 - Faz a chamada da função initList, que inicializa uma Lista de Alunos, ou seja, inicializa um novo tpNo que aponta para Null, pois ainda não foram inseridos itens nessa lista, e retorna esse tpNo, nesse caso lstAlunos será um ponteiro que aponta para o início da Lista Encadeada.
+
+/------------------------------------------------------------------------------------------------------
+
+Questão 4 - Nessa linha é feita a chamada da função cadastrarLstE, tendo como parâmetro o lstAlunos que foi inicializado anteriormente. Como queremos alterar a lista diretamente na memória, e ela por si só já é um ponteiro, o parâmetro vem como um ponteiro para ponteiro (**). Já dentro da função, criaremos um novo tpItem Aluno, atribuíremos valores para seus campos e iremos inserir esse aluno no início da nossa lista, utilizando um Auxiliar, para garantir que a inserção do aluno foi feita com sucesso. Caso a inserção no Auxiliar tenha sido feita com sucesso, iremos atualizar o nosso lstAlunos com o Auxiliar.
+
+/------------------------------------------------------------------------------------------------------
+
+Questão 5 -
+
+A. tpNo *insertLstE(tpNo *lst, tpItem item);
+
+	No melhor caso (Ω) o tempo de execução é de 3, e sua classe será constante. Ele ocorre quando a alocação de memória não é feita com sucesso.
+
+	No pior caso (O) o tempo de execução é de 6, e sua classe será constante. Ele ocorre quando a alocação é feita com sucesso, pois dessa forma as atribuições dentro do if serão realizadas.
+
+	Essa função tem Classe Assintótica Constante.
+
+B. void printLstE(tpNo *lst);
+
+	No melhor caso (Ω) o tempo de execução é de 1, e sua classe será constante. Ele ocorre quando não há nenhum item na lista.
+
+	No pior caso (O) o tempo de execução é de n, e sua classe será linear. Ele ocorre quando existe pelo menos 1 item na lista, e seu tempo de execução será diretamente proporcional à quantidade de itens na lista.
+
+	Essa função não tem Classe Assintótica, pois as classes do melhor e pior caso são diferentes.
+
+C. tpItem * searchItemLstE(tpNo *lst, unsigned int id);
+
+	No melhor caso (Ω) o tempo de execução é de 2, e sua classe será constante. Ele ocorre quando não há nenhum item adicionado na lista.
+
+	No pior caso (O) o tempo de execução é de 3n + 2, e sua classe será linear. Ele ocorre quando não nenhum item na lista com o identificador (id) que desejamos procurar.
+
+	Essa função não tem Classe Assintótica, pois as classes do melhor e pior caso são diferentes.
+
+Parte 2:
+
+	O erro consisitia na função de cadastrar alunos, ao tentar colocar mais de um nome de uma vez (como por exemplo, ao tentar colocar um nome completo), esse erro causava um problema no código pois ao cadastrar alunos é esperado que possamos colocar seu nome completo.
+
+	Para resolver isso, eu substituí o scanf que pegava o nome do aluno por um fgets, pois dessa forma o usuário poderia digitar nomes completos até o limite estipulado de caracteres.
+
+	Isso acabou gerandou outro pequeno erro onde, ao cadastrar um aluno normalmente, os cadastros seguintes não funcionavam corretamente, pois utilizar um fgets e em sequência um scanf ocasionava um problema, pois o scanf deixava um \n padrão e o fgets pegava esse \n, deixando um nome vazio.
+
+	Para resolver esse novo problema eu apenas adicionei um getchar após o scanf para receber esse \n, dessa forma o fgets funciona corretamente.
