@@ -25,4 +25,8 @@ void cadastrarLstE(tpNo **lstAl);
  */
 void consultarLstE(tpNo *lstAl);
 
+/**
+ * Receber uma matrícula fornecida pelo usuário e chamar a função de remoção, dando um feedback em relação ao resultado da função.
+ * @param lisAl Uma lista de alunos;
+ */
 void removerLstE(tpNo **lstAl);

@@ -98,32 +98,40 @@ tpItem* searchItemLstE(tpNo *lst, unsigned int id){
 }
 
 //-----------------------------------------------------------------------------
-
+/**
+ * Auxiliar na função de remover um item
+ * @param lisAl Uma lista de alunos;
+ * @param id O identificador que será removido.
+ * @return A função de remoção com os parâmetros adequados.
+ */
 tpNo* removeItemLstEAux(tpNo **noAtual, unsigned int id){
     return removeItemLstE(NULL, noAtual, id);
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * Função de remover um item
+ * @param noAnterior O no anterior ao que estamos checando atualmente;
+ * @param noAtual O no que faremos a verificação;
+ * @param id O identificador que será removido.
+ * @return Nulo caso a lista esteja vazia, o no atual caso ele seja o único elemento da lista, o no anterior apontando para o no seguinte caso tenham mais de 1 elemento, ou a chamada recursiva caso o id não corresponda ao no atual.
+ */
 tpNo* removeItemLstE(tpNo **noAnterior, tpNo **noAtual, unsigned int id){
-    printf("a");
+
     if(*noAtual == NULL){
-        printf("b");
         return NULL;
     }
 
     if((*noAtual)->item.id == id){
-        printf("c");
         if(noAnterior == NULL){
-            printf("d");
             *noAtual = (*noAtual)->prox;
             return *noAtual;
         }
         else{
-            printf("e");
             return (*noAnterior)->prox = (*noAtual)->prox;
         }
     }
     else{
-        printf("f");
         return removeItemLstE(noAtual, &((*noAtual)->prox), id);
 	}
 }

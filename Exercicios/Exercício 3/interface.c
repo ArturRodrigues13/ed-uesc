@@ -24,9 +24,11 @@ void lstEncadeada(){
 						  break;
 				case '4': removerLstE(&lstAlunos);
 						  break;
-				case '5': printf("\n Hasta la vista baby!");
+				case '5':
+						  break;
+				case '6': printf("\n Hasta la vista baby!");
 			}
-	}while (op != '5');
+	}while (op != '6');
 }
 
 //-----------------------------------------------------------------------------
@@ -42,11 +44,12 @@ char menu(){
 	printf("\n 2 - Exibir Alunos");
 	printf("\n 3 - Consultar Aluno");
 	printf("\n 4 - Remover Aluno");
-	printf("\n 5 - Sair do programa");
+	printf("\n 5 - Ordenar a Lista");
+	printf("\n 6 - Sair do programa");
 	printf("\n Escolha uma das opções acima: ");
 	do{
 	  escolha = getch();
-	}while ( (escolha !='1') && (escolha !='2') && (escolha !='3') && (escolha !='4') && (escolha !='5'));
+	}while ( (escolha !='1') && (escolha !='2') && (escolha !='3') && (escolha !='4') && (escolha !='5') && (escolha !='6'));
 	printf(" %c \n----------------------------", escolha);
 	return  escolha;
 }
@@ -66,6 +69,12 @@ void cadastrarLstE(tpNo **lstAl){
 	printf("\n Digite a matricula do aluno: ");
 	scanf("%d",&mat);
 	getchar();
+
+	if (searchItemLstE(*lstAl,mat) != NULL) {
+		printf("Matrícula Já cadastrada!");
+		return;
+	}
+
 	aluno = setItem(nome,mat);
 	tpNo *lstAux = insertLstE(*lstAl, aluno);
 	if ( isEmptyLstE(lstAux) ){
@@ -98,6 +107,10 @@ void consultarLstE(tpNo *lstAl){
 }
 
 //-----------------------------------------------------------------------------
+/**
+ * Receber uma matrícula fornecida pelo usuário e chamar a função de remoção, dando um feedback em relação ao resultado da função.
+ * @param lisAl Uma lista de alunos;
+ */
 void removerLstE(tpNo **lstAl) {
     unsigned int mat;
 
