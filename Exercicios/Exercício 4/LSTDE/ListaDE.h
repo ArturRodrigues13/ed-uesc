@@ -98,4 +98,6 @@ void copiaL1emL2_SR(tpLDE lde1, tpLDE *lde2);
 
 tpLDE inverteL1emL2(tpLDE lde1);
 
+tpLDE intercalaL1eL2emL3(tpLDE lde1, tpLDE lde2);
+
 #endif // LISTAE_H_INCLUDED

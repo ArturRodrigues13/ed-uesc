@@ -120,12 +120,12 @@ int insertLstDE_SR(tpLDE *lstDE, tpItem item) {
 		if(aux1 == 1) {
 			return 1;
 		} else {
-			printf("Erro ao inserir aluno na lista");
+			printf("\nErro ao inserir aluno na lista");
 			return 0;
 		}
 
 	} else {
-		printf("ID já utilizado na Lista");
+		printf("\nID já utilizado na Lista");
 		return 0;
 	}
 }
@@ -211,7 +211,7 @@ tpLDE copiaL1emL2(tpLDE lde1) {
 	while (aux != NULL){
 		int verificacao = insertLstDE_SR(&lde2,aux->item);
         if (verificacao == 0){
-            printf("Erro ao copiar elemento");
+            printf("\nErro ao copiar elemento");
 			return lde2;
         }
         aux = aux->ptrProx;
@@ -229,10 +229,13 @@ void copiaL1emL2_SR(tpLDE lde1, tpLDE *lde2) {
         if (verificacao.id == 0){
             int veri = insertLstDE_SR(lde2,aux->item);
 			if (veri == 0){
-				printf("Erro ao copiar elemento");
+				printf("\nErro ao copiar elemento");
 				return;
 			}
-        }
+        } else {
+
+			printf("\nItem já está presente em LD2");
+		}
         aux = aux->ptrProx;
     }
 
@@ -247,11 +250,55 @@ tpLDE inverteL1emL2(tpLDE lde1) {
 	while (aux != NULL){
 		int verificacao = insertLstDE_SR(&lde2,aux->item);
         if (verificacao == 0){
-            printf("Erro ao copiar elemento");
+            printf("\nErro ao copiar elemento");
 			return lde2;
         }
         aux = aux->ptrAnt;
     }
 
 	return lde2;
+}
+
+tpLDE intercalaL1eL2emL3(tpLDE lde1, tpLDE lde2) {
+
+	tpLDE lde3 = initLstDE();
+	tpNo *aux = lde1.ptrPrim;
+	tpNo *aux2 = lde2.ptrPrim;
+
+	while (aux != NULL || aux2 != NULL){
+		int verificacao = insertLstDE(&lde3,aux->item);
+        if (verificacao == 0){
+            printf("\nErro ao inserir elemento");
+			return lde3;
+        }
+
+		verificacao = insertLstDE(&lde3,aux2->item);
+		if (verificacao == 0){
+            printf("\nErro ao inserir elemento");
+			return lde3;
+        }
+        aux = aux->ptrProx;
+		aux2 = aux2->ptrProx;
+    }
+
+	if(aux == NULL) {
+		while (aux2 != NULL)
+		{
+			int verificacao = insertLstDE(&lde3,aux2->item);
+			if (verificacao == 0){
+				printf("\nErro ao inserir elemento");
+				return lde3;
+			}
+		}
+	} else if (aux2 == NULL) {
+		while (aux != NULL)
+		{
+			int verificacao = insertLstDE(&lde3,aux->item);
+			if (verificacao == 0){
+				printf("\nErro ao inserir elemento");
+				return lde3;
+			}
+		}
+	}
+	return lde3;
 }

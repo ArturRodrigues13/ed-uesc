@@ -15,6 +15,31 @@ void ordenadoOuNao (tpLDE lde);
 int main() {
 
 	tpLDE lde = initLstDE();
+	/*
+	inserirAluno(&lde);
+    inserirAluno(&lde);
+	inserirAluno(&lde);
+    printLstDE(lde);
+
+	tpLDE lde2 = initLstDE();
+	inserirAluno(&lde2);
+    inserirAluno(&lde2);
+	inserirAluno(&lde2);
+
+	printLstDE(lde2);
+
+	tpLDE lde3 = intercalaL1eL2emL3(lde,lde2);
+	tpLDE lde4 = intercalaL1eL2emL3(lde2,lde);
+	tpLDE lde5 = intercalaL1eL2emL3(lde3,lde4);
+
+	printLstDE(lde3);
+	printf("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	printLstDE(lde4);
+	printf("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	printLstDE(lde5);
+
+	*/
+
 	char op;
 	do{
 			op = menu();
@@ -36,6 +61,7 @@ int main() {
 			}
 	} while (op != '7');
 
+	printf("\n\nFim!");
 	return 0;
 }
 
