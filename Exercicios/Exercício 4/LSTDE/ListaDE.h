@@ -88,5 +88,14 @@ int insertLstDE_SR(tpLDE *lstDE, tpItem item);
 
 int deleteLstDE(tpLDE *lstDE, unsigned int id);
 
+int quantidadeRepetidaLstDE(tpLDE lst, unsigned int id);
+
+booleano estaOrdenada(tpLDE lst);
+
+tpLDE copiaL1emL2(tpLDE lde1);
+
+void copiaL1emL2_SR(tpLDE lde1, tpLDE *lde2);
+
+tpLDE inverteL1emL2(tpLDE lde1);
 
 #endif // LISTAE_H_INCLUDED

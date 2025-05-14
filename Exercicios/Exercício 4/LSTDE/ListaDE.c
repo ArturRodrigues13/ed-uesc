@@ -37,12 +37,14 @@ int insertLstDE(tpLDE *lstDE, tpItem item){
 		no->item      = item;
 		no->ptrProx   = NULL;
 		no->ptrAnt    = (*lstDE).ptrUlt;
-   		(*lstDE).ptrUlt = no;
+
    		(*lstDE).quantItens = (*lstDE).quantItens + 1;
-   		if ((*lstDE).ptrPrim == NULL) //Se a lista estava vazia
+   		if ((*lstDE).ptrPrim == NULL) { //Se a lista estava vazia
             (*lstDE).ptrPrim = no;
-		else {
+			(*lstDE).ptrUlt = no;
+		} else {
 			lstDE->ptrUlt->ptrProx = no;
+			(*lstDE).ptrUlt = no;
 		}
    		return 1;   //1 = elemento inserido
 	}
@@ -114,20 +116,16 @@ int insertLstDE_SR(tpLDE *lstDE, tpItem item) {
 	tpItem aux = searchItemLstDE(*lstDE,item.id);
 
 	if (aux.id == 0) {
-		printf("não existe");
 		int aux1 = insertLstDE(lstDE,item);
 		if(aux1 == 1) {
-
 			return 1;
 		} else {
-
-			printf("Deu erro");
+			printf("Erro ao inserir aluno na lista");
 			return 0;
 		}
 
 	} else {
-
-		printf("já existe");
+		printf("ID já utilizado na Lista");
 		return 0;
 	}
 }
@@ -137,7 +135,6 @@ int deleteLstDE(tpLDE *lstDE, unsigned int id) {
 	tpNo *aux = lstDE -> ptrPrim;
 
     while (aux != NULL){
-		printf("carlos");
         if ( (*aux).item.id == id){
 			if((*aux).item.id == lstDE->ptrPrim->item.id && lstDE->quantItens == 1) {
 
@@ -174,4 +171,87 @@ int deleteLstDE(tpLDE *lstDE, unsigned int id) {
     }
 
     return 0;
+}
+
+int quantidadeRepetidaLstDE(tpLDE lst, unsigned int id) {
+
+	int contador = 0;
+	tpNo *aux = lst.ptrPrim;
+    while (aux != NULL){
+        if ((*aux).item.id == id){
+			contador ++;
+        }
+		aux = aux -> ptrProx;
+    }
+	return contador;
+}
+
+booleano estaOrdenada(tpLDE lst) {
+
+	tpNo *aux = lst.ptrPrim;
+	if (aux == NULL){
+        return true;
+    }
+
+	while (aux->ptrProx != NULL){
+        if (aux->item.id > aux->ptrProx->item.id){
+            return false;
+        }
+        aux = aux->ptrProx;
+    }
+
+	return true;
+}
+
+tpLDE copiaL1emL2(tpLDE lde1) {
+
+	tpLDE lde2 = initLstDE();
+	tpNo *aux = lde1.ptrPrim;
+
+	while (aux != NULL){
+		int verificacao = insertLstDE_SR(&lde2,aux->item);
+        if (verificacao == 0){
+            printf("Erro ao copiar elemento");
+			return lde2;
+        }
+        aux = aux->ptrProx;
+    }
+
+	return lde2;
+}
+
+void copiaL1emL2_SR(tpLDE lde1, tpLDE *lde2) {
+
+	tpNo *aux = lde1.ptrPrim;
+
+	while (aux != NULL){
+		tpItem verificacao = searchItemLstDE((*lde2),aux->item.id);
+        if (verificacao.id == 0){
+            int veri = insertLstDE_SR(lde2,aux->item);
+			if (veri == 0){
+				printf("Erro ao copiar elemento");
+				return;
+			}
+        }
+        aux = aux->ptrProx;
+    }
+
+	return;
+}
+
+tpLDE inverteL1emL2(tpLDE lde1) {
+
+	tpLDE lde2 = initLstDE();
+	tpNo *aux = lde1.ptrUlt;
+
+	while (aux != NULL){
+		int verificacao = insertLstDE_SR(&lde2,aux->item);
+        if (verificacao == 0){
+            printf("Erro ao copiar elemento");
+			return lde2;
+        }
+        aux = aux->ptrAnt;
+    }
+
+	return lde2;
 }
