@@ -24,7 +24,7 @@ void lstEncadeada(){
 						  break;
 				case '4': removerLstE(&lstAlunos);
 						  break;
-				case '5':
+				case '5': ordenarLstE(&lstAlunos);
 						  break;
 				case '6': printf("\n Hasta la vista baby!");
 			}
@@ -119,11 +119,25 @@ void removerLstE(tpNo **lstAl) {
     getchar();
 
     if (*lstAl != NULL) {
-        tpNo *resultado = removeItemLstEAux(lstAl, mat);
-        if (resultado != NULL || *lstAl == NULL) {
+        int resultado = removeItemLstE(lstAl, mat);
+        if (resultado == 0) {
             printf("\n Aluno com matrícula %d removido com sucesso!", mat);
         } else {
             printf("\n Matrícula %d não encontrada na lista!", mat);
+        }
+    } else {
+        printf("\n ERRO - Lista não inicializada ou vazia!");
+    }
+}
+
+void ordenarLstE(tpNo **lstAl) {
+
+    if (*lstAl != NULL) {
+        int resultado = ordenarItensLstE(lstAl);
+        if (resultado == 0) {
+            printf("\n Alunos ordenados com sucesso!!!");
+        } else {
+            printf("\n Erro na execução da função");
         }
     } else {
         printf("\n ERRO - Lista não inicializada ou vazia!");

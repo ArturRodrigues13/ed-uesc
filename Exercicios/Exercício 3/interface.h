@@ -30,3 +30,5 @@ void consultarLstE(tpNo *lstAl);
  * @param lisAl Uma lista de alunos;
  */
 void removerLstE(tpNo **lstAl);
+
+void ordenarLstE(tpNo **lstAl);

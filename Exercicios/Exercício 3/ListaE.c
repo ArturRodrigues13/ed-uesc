@@ -99,39 +99,85 @@ tpItem* searchItemLstE(tpNo *lst, unsigned int id){
 
 //-----------------------------------------------------------------------------
 /**
- * Auxiliar na função de remover um item
- * @param lisAl Uma lista de alunos;
- * @param id O identificador que será removido.
- * @return A função de remoção com os parâmetros adequados.
- */
-tpNo* removeItemLstEAux(tpNo **noAtual, unsigned int id){
-    return removeItemLstE(NULL, noAtual, id);
-}
-
-//-----------------------------------------------------------------------------
-/**
  * Função de remover um item
  * @param noAnterior O no anterior ao que estamos checando atualmente;
  * @param noAtual O no que faremos a verificação;
  * @param id O identificador que será removido.
  * @return Nulo caso a lista esteja vazia, o no atual caso ele seja o único elemento da lista, o no anterior apontando para o no seguinte caso tenham mais de 1 elemento, ou a chamada recursiva caso o id não corresponda ao no atual.
  */
-tpNo* removeItemLstE(tpNo **noAnterior, tpNo **noAtual, unsigned int id){
+int removeItemLstE(tpNo **lst, unsigned int id){
 
-    if(*noAtual == NULL){
-        return NULL;
+	tpNo *noAtual = *lst;
+	tpNo *noAnterior = NULL;
+
+    if(noAtual == NULL){
+        return 0;
     }
 
-    if((*noAtual)->item.id == id){
-        if(noAnterior == NULL){
-            *noAtual = (*noAtual)->prox;
-            return *noAtual;
-        }
-        else{
-            return (*noAnterior)->prox = (*noAtual)->prox;
-        }
-    }
-    else{
-        return removeItemLstE(noAtual, &((*noAtual)->prox), id);
+	while (noAtual != NULL) {
+		if(noAtual->item.id == id){
+			if(noAnterior == NULL){
+
+				*lst = noAtual->prox;
+			}
+			else{
+				noAnterior->prox = noAtual->prox;
+			}
+
+			free(noAtual);
+			return 0;
+		}
+
+		noAnterior = noAtual;
+		noAtual = noAtual->prox;
 	}
+
+    return 1;
+}
+
+int ordenarItensLstE(tpNo **lst) {
+
+	int quantidade_alunos = 0;
+	tpNo *aux = *lst;
+	while (aux != NULL) {
+
+		quantidade_alunos ++;
+		aux = aux->prox;
+	}
+
+	aux = *lst;
+
+	tpItem *ordenar = (tpItem*)malloc(sizeof(tpItem) * quantidade_alunos);
+
+	if(ordenar != NULL) {
+		for(int i = 0; i < quantidade_alunos; i++) {
+
+			ordenar[i] = aux->item;
+			removeItemLstE(lst,aux->item.id);
+			aux = aux->prox;
+		}
+
+		for (int i = 0; i < quantidade_alunos; i++)
+		{
+			for(int j = 0; j < quantidade_alunos;j++) {
+				if(ordenar[j].id < ordenar[i].id) {
+					tpItem auxItem = ordenar[j];
+					ordenar[j] = ordenar[i];
+					ordenar[i] = auxItem;
+				}
+			}
+		}
+
+		for (int i = 0; i < quantidade_alunos; i++) {
+
+			*lst = insertLstE(*lst,ordenar[i]);
+		}
+	} else {
+		printf("Erro de alocação");
+		return 1;
+	}
+
+	free(ordenar);
+
+	return 0;
 }
