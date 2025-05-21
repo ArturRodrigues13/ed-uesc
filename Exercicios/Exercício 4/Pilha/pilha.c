@@ -87,6 +87,39 @@ tpNo topPilha(tpPilha pilha) {
 	return aux;
 }
 
+int ordenarPilhaCrescente(tpPilha *pilha) {
+
+	int n = pilha->quantidade_itens;
+
+	int *ordenar = (int*)malloc(sizeof(int) * n);
+	if(ordenar != NULL) {
+		for(int i = 0; i < n; i++) {
+
+			ordenar[i] = pilha->topo->n;
+			popPilha(pilha);
+		}
+
+		for (int i = 0; i < n; i++)
+		{
+			for(int j = 0; j < n;j++) {
+				if(ordenar[j] < ordenar[i]) {
+					int c = ordenar[j];
+					ordenar[j] = ordenar[i];
+					ordenar[i] = c;
+				}
+			}
+		}
+
+		for (int i = 0; i < n; i++) {
+
+			pushPilha(pilha,ordenar[i]);
+		}
+	}
+
+	free(ordenar);
+	return 0;
+}
+
 int lenghtPilha(tpPilha pilha) {
 
 	return pilha.quantidade_itens;
@@ -112,17 +145,17 @@ int main() {
 	if(isEmptyPilha(pilha) == 0) {
 		printf("Pilha Vazia");
 	}
+	pushPilha(&pilha,30);
 	pushPilha(&pilha,10);
 	pushPilha(&pilha,20);
-	pushPilha(&pilha,30);
 
 	if(isEmptyPilha(pilha) == 0) {
 		printf("Pilha Vazia");
 	}
 
-	popPilha(&pilha);
-
 	printf("%d",lenghtPilha(pilha));
+
+	ordenarPilhaCrescente(&pilha);
 
 	printPilha(pilha);
 }

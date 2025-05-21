@@ -1,5 +1,7 @@
-/output
 /.vscode
-/Exercicios/Exercício 3/.vscode
-/Exercicios/Exercício 3/output
-/Exercicios/Exercício 3/build
+/Exercicios/Exercício 3/*
+/Exercicios/Exercício 4/*
+/Exercicios/Exercício 2/*
+/Exercicios/Exercício 1/*
+/Exercicios/Exercício 5/*
+/Algoritmos de Ordenação/*
