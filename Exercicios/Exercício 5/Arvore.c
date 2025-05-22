@@ -45,4 +45,67 @@ tpArvore* insertArvore(tpArvore* arvore, tpItem item) {
 	}
 }
 
+int alturaArvore(tpArvore* arvore) {
 
+	if(arvore == NULL) {
+
+		return -1;
+	} else {
+
+		if(arvore ->direita == NULL && arvore ->esquerda == NULL) {
+
+			return 0;
+		} else if (arvore ->direita == NULL && arvore ->esquerda != NULL) {
+
+			return 1 + alturaArvore(arvore -> esquerda);
+		} else if (arvore -> direita != NULL && arvore ->esquerda == NULL) {
+
+			return 1 + alturaArvore(arvore -> direita);
+		} else if (arvore -> direita != NULL && arvore ->esquerda != NULL) {
+
+			int esquerda = 1 + alturaArvore(arvore -> esquerda);
+			int direita = 1 + alturaArvore(arvore -> direita);
+
+			if(esquerda > direita) {
+				return esquerda;
+			} else {
+ 				return direita;
+			}
+		}
+		return -1;
+	}
+}
+
+int main() {
+
+	tpArvore *arvore = initArvore();
+	tpItem item;
+	item.num = 10;
+
+	arvore = insertArvore(arvore,item);
+	printf("%d",arvore->item.num);
+	item.num = 12;
+	arvore = insertArvore(arvore,item);
+	printf("%d",arvore->direita->item.num);
+	item.num = 14;
+	arvore = insertArvore(arvore,item);
+
+	item.num = 16;
+	arvore = insertArvore(arvore,item);
+
+	item.num = 4;
+	arvore = insertArvore(arvore,item);
+
+	item.num = 3;
+	arvore = insertArvore(arvore,item);
+
+	item.num = 2;
+	arvore = insertArvore(arvore,item);
+
+	item.num = 1;
+	arvore = insertArvore(arvore,item);
+
+	printf("\nAltura: %d",alturaArvore(arvore));
+
+	return 0;
+}
