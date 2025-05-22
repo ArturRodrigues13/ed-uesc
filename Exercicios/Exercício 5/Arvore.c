@@ -76,12 +76,48 @@ int alturaArvore(tpArvore* arvore) {
 	}
 }
 
+tpItem buscaArvore(tpArvore* arvore,int item) {
+
+	tpItem lixo;
+	lixo.num = -1;
+
+	if(arvore == NULL) {
+
+		return lixo;
+	} else {
+
+		if (arvore->item.num == item) {
+
+			return arvore->item;
+		} else {
+
+			tpItem procura;
+
+			if(item < arvore->item.num) {
+
+				procura = buscaArvore(arvore -> esquerda,item);
+			} else {
+
+				procura = buscaArvore(arvore -> direita,item);
+			}
+
+			if(procura.num != -1) {
+				return procura;
+			}
+		}
+
+	}
+
+	return lixo;
+}
+
+
 int main() {
 
 	tpArvore *arvore = initArvore();
 	tpItem item;
-	item.num = 10;
 
+	item.num = 10;
 	arvore = insertArvore(arvore,item);
 	printf("%d",arvore->item.num);
 	item.num = 12;
@@ -106,6 +142,8 @@ int main() {
 	arvore = insertArvore(arvore,item);
 
 	printf("\nAltura: %d",alturaArvore(arvore));
+	tpItem teste = buscaArvore(arvore,2);
+	printf("\n%d",teste.num);
 
 	return 0;
 }
