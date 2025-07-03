@@ -14,11 +14,11 @@ void buble_sort(int artur[], int tamanho) {
 			}
 		}
 	}
-
 }
 
 int main () {
-	int artur[10];
+
+	int artur[9];
 
 	for (int i = 0; i < 10;i++)
 	{

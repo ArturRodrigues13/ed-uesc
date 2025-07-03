@@ -43,16 +43,16 @@ void mergeSort(int *vetor, int inicio, int final) {
 
 int main() {
 
-	int vetor[11] = {11,10,9,8,7,6,5,4,3,2,1};
+	int vetor[10] = {10,9,8,7,6,5,4,3,2,1};
 
-	for (int i = 0; i < 11;i++)
+	for (int i = 0; i < 10;i++)
 	{
 		printf("%d ",vetor[i]);
 	}
 
-	mergeSort(vetor,0,10);
+	mergeSort(vetor,0,9);
 
-	for (int i = 0; i < 11;i++)
+	for (int i = 0; i < 10;i++)
 	{
 		printf("%d ",vetor[i]);
 	}

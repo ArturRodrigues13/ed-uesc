@@ -1,7 +1,10 @@
-/.vscode
-/Exercicios/Exercício 3/*
-/Exercicios/Exercício 4/*
-/Exercicios/Exercício 2/*
-/Exercicios/Exercício 1/*
-/Exercicios/Exercício 5/*
-/Algoritmos de Ordenação/*
+.vscode/
+output/
+*.exe
+*.o
+build/
+bin/
+obj/
+*.cbp
+*.depend
+*.layout

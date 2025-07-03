@@ -6,7 +6,7 @@ int particiona(int *vetor, int inicio, int final) {
 	int pivo = vetor[final];
 	int esquerda = inicio - 1;
 
-	for (int direita = inicio; direita <= final - 1; direita++) {
+	for (int direita = inicio; direita < final; direita++) {
 		if (vetor[direita] <= pivo) {
 			esquerda++;
 			int c = vetor[esquerda];
@@ -15,11 +15,13 @@ int particiona(int *vetor, int inicio, int final) {
 		}
 	}
 
-	int c = vetor[esquerda + 1];
-	vetor[esquerda + 1] = vetor[final];
+	esquerda++;
+
+	int c = vetor[esquerda];
+	vetor[esquerda] = vetor[final];
 	vetor[final] = c;
 
-	return esquerda + 1;
+	return esquerda;
 }
 
 void quickSort(int *vetor, int inicio, int final) {
@@ -35,7 +37,7 @@ void quickSort(int *vetor, int inicio, int final) {
 
 int main() {
 
-	int vetor[11] = {99,33,55,77,11,22,88,66,33,44};
+	int vetor[10] = {99,33,55,77,11,22,88,66,33,44};
 
 	for (int i = 0; i < 10;i++)
 	{
