@@ -111,6 +111,50 @@ tpItem buscaArvore(tpArvore* arvore,int item) {
 	return lixo;
 }
 
+int VerificaIgualdadeArvore(tpArvore* arvore1, tpArvore* arvore2) {
+
+	if(arvore1 == NULL && arvore2 == NULL) {
+		return 1;
+	}
+
+	if(arvore1 == NULL || arvore2 == NULL) {
+		return 0;
+	}
+
+	if(arvore1->item.num != arvore2->item.num) {
+		return 0;
+	}
+
+	return VerificaIgualdadeArvore(arvore1->esquerda,arvore2->esquerda) && VerificaIgualdadeArvore(arvore1->direita,arvore2->direita);
+}
+/*
+int VerificaSeABB(tpArvore* arvore) {
+
+	if(arvore == NULL) {
+		return 1;
+	}
+
+	if(arvore->esquerda == NULL && arvore->direita == NULL) {
+		return 1;
+	}
+
+	if(arvore->esquerda != NULL) {
+		if(arvore->item.num < arvore->esquerda->item.num) {
+			return 0;
+		}
+	}
+
+	if(arvore->direita != NULL) {
+		if(arvore->item.num > arvore->direita->item.num) {
+			return 0;
+		}
+	}
+
+	return VerificaSeABB(arvore->esquerda) && VerificaSeABB(arvore->direita);
+}
+
+*/
+
 
 int main() {
 
@@ -126,20 +170,15 @@ int main() {
 	item.num = 14;
 	arvore = insertArvore(arvore,item);
 
-	item.num = 16;
-	arvore = insertArvore(arvore,item);
-
-	item.num = 4;
-	arvore = insertArvore(arvore,item);
-
-	item.num = 3;
-	arvore = insertArvore(arvore,item);
-
-	item.num = 2;
-	arvore = insertArvore(arvore,item);
-
-	item.num = 1;
-	arvore = insertArvore(arvore,item);
+	tpArvore *arvore2 = initArvore();
+	item.num = 10;
+	arvore2 = insertArvore(arvore2,item);
+	printf("%d",arvore->item.num);
+	item.num = 12;
+	arvore2 = insertArvore(arvore2,item);
+	printf("%d",arvore->direita->item.num);
+	item.num = 14;
+	arvore2 = insertArvore(arvore2,item);
 
 	printf("\nAltura: %d",alturaArvore(arvore));
 	tpItem teste = buscaArvore(arvore,2);
