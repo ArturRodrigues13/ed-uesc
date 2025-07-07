@@ -20,6 +20,28 @@ tpArvore* initArvore() {
 	return arvore;
 }
 
+tpArvore* insertArvoreSemSerBinariaBusca(tpArvore* arvore, tpItem item) {
+
+	if(arvore == NULL) {
+
+		tpArvore *galho = (tpArvore*)malloc(sizeof(tpArvore));
+
+		if(galho != NULL) {
+
+			galho->item = item;
+			galho->esquerda = NULL;
+			galho->direita = NULL;
+			return galho;
+		}
+		return NULL;
+	} else {
+
+		arvore->direita = insertArvoreSemSerBinariaBusca(arvore->direita,item);
+
+		return arvore;
+	}
+}
+
 tpArvore* insertArvore(tpArvore* arvore, tpItem item) {
 
 	if(arvore == NULL) {
@@ -127,34 +149,19 @@ int VerificaIgualdadeArvore(tpArvore* arvore1, tpArvore* arvore2) {
 
 	return VerificaIgualdadeArvore(arvore1->esquerda,arvore2->esquerda) && VerificaIgualdadeArvore(arvore1->direita,arvore2->direita);
 }
-/*
-int VerificaSeABB(tpArvore* arvore) {
+
+int VerificaSeABB(tpArvore* arvore, int minimo, int maximo) {
 
 	if(arvore == NULL) {
 		return 1;
 	}
 
-	if(arvore->esquerda == NULL && arvore->direita == NULL) {
-		return 1;
+	if(!(maximo > arvore->item.num && arvore->item.num > minimo)) {
+		return 0;
 	}
 
-	if(arvore->esquerda != NULL) {
-		if(arvore->item.num < arvore->esquerda->item.num) {
-			return 0;
-		}
-	}
-
-	if(arvore->direita != NULL) {
-		if(arvore->item.num > arvore->direita->item.num) {
-			return 0;
-		}
-	}
-
-	return VerificaSeABB(arvore->esquerda) && VerificaSeABB(arvore->direita);
+	return VerificaSeABB(arvore->esquerda,minimo,arvore->item.num) && VerificaSeABB(arvore->direita,arvore->item.num,maximo);
 }
-
-*/
-
 
 int main() {
 
@@ -164,21 +171,33 @@ int main() {
 	item.num = 10;
 	arvore = insertArvore(arvore,item);
 	printf("%d",arvore->item.num);
-	item.num = 12;
+	item.num = 5;
 	arvore = insertArvore(arvore,item);
-	printf("%d",arvore->direita->item.num);
-	item.num = 14;
+	item.num = 6;
 	arvore = insertArvore(arvore,item);
+	item.num = 1;
+	arvore = insertArvore(arvore,item);
+	item.num = 20;
+	arvore = insertArvore(arvore,item);
+	item.num = 30;
+	arvore = insertArvore(arvore,item);
+
+	//item.num = 12;
+	//arvore->esquerda->direita->direita = insertArvore(arvore->esquerda->direita->direita,item);
 
 	tpArvore *arvore2 = initArvore();
 	item.num = 10;
-	arvore2 = insertArvore(arvore2,item);
+	arvore2 = insertArvoreSemSerBinariaBusca(arvore2,item);
 	printf("%d",arvore->item.num);
-	item.num = 12;
-	arvore2 = insertArvore(arvore2,item);
+	item.num = 11;
+	arvore2 = insertArvoreSemSerBinariaBusca(arvore2,item);
 	printf("%d",arvore->direita->item.num);
-	item.num = 14;
-	arvore2 = insertArvore(arvore2,item);
+	item.num = 9;
+	arvore2 = insertArvoreSemSerBinariaBusca(arvore2,item);
+
+	int verifica = VerificaSeABB(arvore,0,100000);
+
+	printf("\n\n\n\n%d",verifica);
 
 	printf("\nAltura: %d",alturaArvore(arvore));
 	tpItem teste = buscaArvore(arvore,2);
