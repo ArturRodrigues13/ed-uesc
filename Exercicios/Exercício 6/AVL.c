@@ -54,21 +54,17 @@ int alturaArvore(tpArvore* arvore) {
 tpArvore* RSD(tpArvore* arv) {
 
 	tpArvore* filho = arv->esquerda;
-	tpArvore* aux = arv->direita;
+	arv->esquerda = filho->direita;
 	filho->direita = arv;
-	arv->esquerda = aux;
-	arv = filho;
-	return arv;
+	return filho;
 }
 
 tpArvore* RSE(tpArvore* arv) {
 
 	tpArvore* filho = arv->direita;
-	tpArvore* aux = arv->esquerda;
+	arv->direita = filho->esquerda;
 	filho->esquerda = arv;
-	arv->direita = aux;
-	arv = filho;
-	return arv;
+	return filho;
 }
 
 int verificaFB(tpArvore* arvore) {
@@ -117,10 +113,10 @@ tpArvore* insertArvore(tpArvore* arvore, tpItem item) {
 			arvore->esquerda = RSE(arvore->esquerda);
 			return RSD(arvore);
 		}
-		if(FB > 1 && verificaFB(arvore->esquerda) > 0) {
+		if(FB > 1 && verificaFB(arvore->direita) > 0) {
 			return RSE(arvore);
 		}
-		if(FB < -1 && verificaFB(arvore->esquerda) > 0) {
+		if(FB > 1 && verificaFB(arvore->direita) < 0) {
 
 			arvore->direita = RSD(arvore->direita);
 			return RSE(arvore);
@@ -174,6 +170,78 @@ void printArvoreEmOrdem(tpArvore* arvore) {
 	printArvoreEmOrdem(arvore->direita);
 }
 
+tpArvore* procuraMenor(tpArvore* arvore) {
+
+	tpArvore *aux1 = arvore;
+	tpArvore *aux2 = arvore->esquerda;
+
+	while (aux2 != NULL) {
+
+		aux1 = aux2;
+		aux2 = aux2->esquerda;
+	}
+
+	return aux1;
+}
+
+int removeArvore(tpArvore** raiz, int valor) {
+
+	if (*raiz == NULL) {
+		printf("Árvore vazia ou não inicializada\n");
+		return 0;
+	}
+
+	int res;
+
+	if (valor < (*raiz)->item.num) {
+		res = removeArvore(&((*raiz)->esquerda), valor);
+		if (res == 1 && verificaFB(*raiz) >= 2) {
+			if (alturaArvore((*raiz)->direita->esquerda) <= alturaArvore((*raiz)->direita->direita)) {
+				*raiz = RSE(*raiz);
+			} else {
+				(*raiz)->direita = RSD((*raiz)->direita);
+				*raiz = RSE(*raiz);
+			}
+		}
+	} else if (valor > (*raiz)->item.num) {
+		res = removeArvore(&((*raiz)->direita), valor);
+		if (res == 1 && verificaFB(*raiz) <= -2) {
+			if (alturaArvore((*raiz)->esquerda->direita) <= alturaArvore((*raiz)->esquerda->esquerda)) {
+				*raiz = RSD(*raiz);
+			} else {
+				(*raiz)->esquerda = RSE((*raiz)->esquerda);
+				*raiz = RSD(*raiz);
+			}
+		}
+	} else {
+		tpArvore* temp = *raiz;
+
+		if ((*raiz)->esquerda == NULL) {
+			*raiz = (*raiz)->direita;
+			free(temp);
+		} else if ((*raiz)->direita == NULL) {
+			*raiz = (*raiz)->esquerda;
+			free(temp);
+		} else {
+			tpArvore* menor = procuraMenor((*raiz)->direita);
+			(*raiz)->item = menor->item;
+			removeArvore(&((*raiz)->direita), menor->item.num);
+
+			if (verificaFB(*raiz) <= -2) {
+				if (alturaArvore((*raiz)->esquerda->direita) <= alturaArvore((*raiz)->esquerda->esquerda)) {
+					*raiz = RSD(*raiz);
+				} else {
+					(*raiz)->esquerda = RSE((*raiz)->esquerda);
+					*raiz = RSD(*raiz);
+				}
+			}
+		}
+		return 1;
+	}
+	return res;
+}
+
+
 int main() {
 
 	tpArvore *arvore = initArvore();
@@ -196,11 +264,11 @@ int main() {
 	item.num = 17;
 	arvore = insertArvore(arvore,item);
 
-	printf("%d",arvore->item.num);
+	printArvoreEmOrdem(arvore);
 
-	printf("%d",arvore->esquerda->item.num);
+	int verifica = removeArvore(&arvore,15);
 
-	printf("%d",arvore->direita->item.num);
+	printf("\nRemoveu: %d",verifica);
 
 	printArvoreEmOrdem(arvore);
 
