@@ -1,18 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-struct Conteudo {
-	int num;
-};
-
-typedef struct Conteudo tpItem;
-
-struct rNo {
-	tpItem item;
-	struct rNo *esquerda, *direita;
-};
-
-typedef struct rNo tpArvore;
+#include "AVLFunctions.h"
 
 tpArvore* initArvore() {
 
@@ -79,6 +65,12 @@ int verificaFB(tpArvore* arvore) {
 }
 
 tpArvore* insertArvore(tpArvore* arvore, tpItem item) {
+
+	if(item.num <= 0) return NULL;
+
+	tpItem busca = buscaArvore(arvore,item.num);
+
+	if(busca.num != -1) return NULL;
 
 	if(arvore == NULL) {
 
@@ -187,7 +179,6 @@ tpArvore* procuraMenor(tpArvore* arvore) {
 int removeArvore(tpArvore** raiz, int valor) {
 
 	if (*raiz == NULL) {
-		printf("Árvore vazia ou não inicializada\n");
 		return 0;
 	}
 
@@ -239,38 +230,4 @@ int removeArvore(tpArvore** raiz, int valor) {
 		return 1;
 	}
 	return res;
-}
-
-
-int main() {
-
-	tpArvore *arvore = initArvore();
-	tpItem item;
-
-	item.num = 15;
-	arvore = insertArvore(arvore,item);
-	item.num = 1;
-	arvore = insertArvore(arvore,item);
-	item.num = 2;
-	arvore = insertArvore(arvore,item);
-	item.num = 16;
-	arvore = insertArvore(arvore,item);
-	item.num = 8;
-	arvore = insertArvore(arvore,item);
-	item.num = 20;
-	arvore = insertArvore(arvore,item);
-	item.num = 5;
-	arvore = insertArvore(arvore,item);
-	item.num = 17;
-	arvore = insertArvore(arvore,item);
-
-	printArvoreEmOrdem(arvore);
-
-	int verifica = removeArvore(&arvore,15);
-
-	printf("\nRemoveu: %d",verifica);
-
-	printArvoreEmOrdem(arvore);
-
-	return 0;
 }

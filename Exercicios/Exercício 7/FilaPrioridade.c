@@ -46,7 +46,7 @@ void sobeHeap(int* vetor, int indice) {
 
 void constroiHeap(int* vetor, int tamanho) {
 
-	for(int i = tamanho / 2 - 1; i >= 0; i --) {
+	for(int i = tamanho / 2; i >= 0; i --) {
 
 		desceHeap(vetor,tamanho,i);
 	}
