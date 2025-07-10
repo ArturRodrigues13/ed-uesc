@@ -30,6 +30,8 @@ tpItem buscaArvore(tpArvore* arvore,int item);
 
 void printArvoreEmOrdem(tpArvore* arvore);
 
+void printArvoreBonita(tpArvore* arvore, int nivel);
+
 tpArvore* procuraMenor(tpArvore* arvore);
 
 int removeArvore(tpArvore** raiz, int valor);
@@ -43,3 +45,5 @@ void RemoverElementoArvore(tpArvore* arvore);
 void BuscarElementoArvore(tpArvore* arvore);
 
 void PrintarArvoreOrdem(tpArvore* arvore);
+
+void PrintarArvoreBonita(tpArvore* arvore);

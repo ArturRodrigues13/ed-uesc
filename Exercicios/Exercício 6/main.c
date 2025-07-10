@@ -23,13 +23,15 @@ int main(){
 						  break;
 				case '3': BuscarElementoArvore(arvore);
 						  break;
-				case '4': printArvoreEmOrdem(arvore);
+				case '4': PrintarArvoreOrdem(arvore);
 						  break;
-				case '5': printf("\n Bye Bye!");
+				case '5': PrintarArvoreBonita(arvore);
+						  break;
+				case '6': printf("\n Bye Bye!");
 						  break;
 
 			}
-	}while (op != '5');
+	}while (op != '6');
 
 	return 0;
 }
@@ -46,13 +48,14 @@ char menu(){
 	printf("\n 1 - Adicionar Elemento");
 	printf("\n 2 - Remover Elemento");
 	printf("\n 3 - Buscar Valor na Árvore");
-	printf("\n 4 - Printar a Árvore Em Ordem");
-	printf("\n 5 - Sair do programa");
+	printf("\n 4 - Printar a Árvore Em Pré-Ordem");
+	printf("\n 5 - Printar a Árvore Visual Simulado");
+	printf("\n 6 - Sair do programa");
 	printf("\n Escolha uma das opções acima: ");
 	do{
 	  escolha = (char) getch();
-	}while ( (escolha !='1') && (escolha !='2') && (escolha !='3') && (escolha !='4') && (escolha !='5'));
-	printf(" %c \n----------------------------", escolha);
+	}while ( (escolha !='1') && (escolha !='2') && (escolha !='3') && (escolha !='4') && (escolha !='5' && (escolha !='6')));
+	printf(" %c \n----------------------------\n", escolha);
 	return  escolha;
 }
 
@@ -118,6 +121,15 @@ void PrintarArvoreOrdem(tpArvore* arvore) {
 
     if (arvore != NULL) {
         printArvoreEmOrdem(arvore);
+    } else {
+        printf("\n ERRO - Árvore não inicializada ou vazia!");
+    }
+}
+
+void PrintarArvoreBonita(tpArvore* arvore) {
+
+    if (arvore != NULL) {
+        printArvoreBonita(arvore,0);
     } else {
         printf("\n ERRO - Árvore não inicializada ou vazia!");
     }

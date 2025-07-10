@@ -162,6 +162,20 @@ void printArvoreEmOrdem(tpArvore* arvore) {
 	printArvoreEmOrdem(arvore->direita);
 }
 
+void printArvoreBonita(tpArvore* arvore, int nivel) {
+    if (arvore == NULL) return;
+
+
+    printArvoreBonita(arvore->direita, nivel + 1);
+
+    for (int i = 0; i < nivel; i++) {
+        printf("    ");
+    }
+    printf("%d\n", arvore->item.num);
+
+    printArvoreBonita(arvore->esquerda, nivel + 1);
+}
+
 tpArvore* procuraMenor(tpArvore* arvore) {
 
 	tpArvore *aux1 = arvore;
