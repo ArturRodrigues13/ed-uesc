@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-#include "AVLFunctions.h"
+#include "AVLFunctionsChar.h"
 
 // Function prototype for menu
 char menu();
@@ -12,7 +12,7 @@ char menu();
  */
 int main(){
 	tpArvore *arvore = initArvore();
-	printf("ARVORE AVL!\n");
+	printf("ARVORE AVL de Caracteres!!!\n");
 	char op;
 	do{
 			op = menu();
@@ -47,8 +47,8 @@ char menu(){
 	printf("\n----------------------------");
 	printf("\n 1 - Adicionar Elemento");
 	printf("\n 2 - Remover Elemento");
-	printf("\n 3 - Buscar Valor na Árvore");
-	printf("\n 4 - Printar a Árvore Em Pré-Ordem");
+	printf("\n 3 - Buscar letra na Árvore");
+	printf("\n 4 - Printar a Árvore Em Pós-Ordem");
 	printf("\n 5 - Printar a Árvore Visual Simulado");
 	printf("\n 6 - Sair do programa");
 	printf("\n Escolha uma das opções acima: ");
@@ -66,17 +66,17 @@ char menu(){
  */
 void InserirElementoArvore(tpArvore** arvore){
 	tpItem item;
-	int valor;
+	char valor;
 
-	printf("\n Digite o valor a ser armazenado: ");
-	scanf("%d",&valor);
+	printf("\n Digite a letra a ser armazenada: ");
+	scanf("%c",&valor);
 	getchar();
 
-	item.num = valor;
+	item.letra = valor;
 
 	tpArvore *arvoreAux = insertArvore(*arvore,item);
 	if ( arvoreAux == NULL ){
-		printf("\n ERRO - Valor Inválido ou Já Presente na Árvore");
+		printf("\n ERRO - Letra Inválida, apenas MAIÚSCULAS");
 	} else {
 		printf("\n Inserido com Sucesso!!!");
 		*arvore = arvoreAux;
@@ -84,18 +84,18 @@ void InserirElementoArvore(tpArvore** arvore){
 }
 
 void RemoverElementoArvore(tpArvore** arvore) {
-    int valor;
+    char valor;
 
-    printf("\n Digite o valor a ser removido: ");
-    scanf("%d", &valor);
+    printf("\n Digite a letra a ser removida: ");
+    scanf("%c", &valor);
     getchar();
 
     if (arvore != NULL) {
         int resultado = removeArvore(arvore, valor);
         if (resultado == 0) {
-            printf("Valor não encontrado na Árvore\n");
+            printf("Letra não encontrada na Árvore\n");
         } else {
-        	printf("\n Valor %d Removido com Sucesso da Árvore", valor);
+        	printf("\n Letra %c Removida com Sucesso da Árvore", valor);
         }
     } else {
         printf("\n ERRO - Árvore não inicializada ou vazia!");
@@ -103,24 +103,24 @@ void RemoverElementoArvore(tpArvore** arvore) {
 }
 
 void BuscarElementoArvore(tpArvore* arvore){
-	int valor;
+	char valor;
 
-	printf("\n Digite o valor que deseja buscar: ");
-	scanf("%d",&valor);
+	printf("\n Digite a letra que deseja buscar: ");
+	scanf("%c",&valor);
 	getchar();
 
 	tpItem item = buscaArvore(arvore,valor);
-	if ( item.num != -1 ){
-		printf("\n Valor encontrado na Árvore");
+	if ( item.letra != 'a' ){
+		printf("\n Letra encontrada na Árvore");
 	} else {
-		printf("\n Valor não presente na Árvore!!!");
+		printf("\n Letra não presente na Árvore!!!");
 	}
 }
 
 void PrintarArvoreOrdem(tpArvore* arvore) {
 
     if (arvore != NULL) {
-        printArvoreEmOrdem(arvore);
+        printArvoreEmPosOrdem(arvore);
     } else {
         printf("\n ERRO - Árvore não inicializada ou vazia!");
     }

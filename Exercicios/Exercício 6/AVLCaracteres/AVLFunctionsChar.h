@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 struct Conteudo {
-	int num;
+	char letra;
 };
 
 typedef struct Conteudo tpItem;
@@ -26,15 +26,15 @@ int verificaFB(tpArvore* arvore);
 
 tpArvore* insertArvore(tpArvore* arvore, tpItem item);
 
-tpItem buscaArvore(tpArvore* arvore,int item);
+tpItem buscaArvore(tpArvore* arvore,char caractere);
 
-void printArvoreEmOrdem(tpArvore* arvore);
+void printArvoreEmPosOrdem(tpArvore* arvore);
 
 void printArvoreBonita(tpArvore* arvore, int nivel);
 
 tpArvore* procuraMenor(tpArvore* arvore);
 
-int removeArvore(tpArvore** raiz, int valor);
+int removeArvore(tpArvore** raiz, char valor);
 
 //-----------------------------------------------------------//
 

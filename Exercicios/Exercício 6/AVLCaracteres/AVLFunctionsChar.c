@@ -1,4 +1,4 @@
-#include "AVLFunctions.h"
+#include "AVLFunctionsChar.h"
 
 tpArvore* initArvore() {
 
@@ -66,11 +66,7 @@ int verificaFB(tpArvore* arvore) {
 
 tpArvore* insertArvore(tpArvore* arvore, tpItem item) {
 
-	if(item.num <= 0) return NULL;
-
-	tpItem busca = buscaArvore(arvore,item.num);
-
-	if(busca.num != -1) return NULL;
+	if(item.letra < 65 || item.letra > 90) return NULL;
 
 	if(arvore == NULL) {
 
@@ -87,7 +83,7 @@ tpArvore* insertArvore(tpArvore* arvore, tpItem item) {
 		return NULL;
 	} else {
 
-		if(item.num > arvore->item.num) {
+		if(item.letra >= arvore->item.letra) {
 			arvore->direita = insertArvore(arvore->direita,item);
 
 		} else {
@@ -118,32 +114,32 @@ tpArvore* insertArvore(tpArvore* arvore, tpItem item) {
 	}
 }
 
-tpItem buscaArvore(tpArvore* arvore,int item) {
+tpItem buscaArvore(tpArvore* arvore,char caractere) {
 
 	tpItem lixo;
-	lixo.num = -1;
+	lixo.letra = 'a';
 
 	if(arvore == NULL) {
 
 		return lixo;
 	} else {
 
-		if (arvore->item.num == item) {
+		if (arvore->item.letra == caractere) {
 
 			return arvore->item;
 		} else {
 
 			tpItem procura;
 
-			if(item < arvore->item.num) {
+			if(caractere < arvore->item.letra) {
 
-				procura = buscaArvore(arvore -> esquerda,item);
+				procura = buscaArvore(arvore -> esquerda,caractere);
 			} else {
 
-				procura = buscaArvore(arvore -> direita,item);
+				procura = buscaArvore(arvore -> direita,caractere);
 			}
 
-			if(procura.num != -1) {
+			if(procura.letra != 'a') {
 				return procura;
 			}
 		}
@@ -153,13 +149,13 @@ tpItem buscaArvore(tpArvore* arvore,int item) {
 	return lixo;
 }
 
-void printArvoreEmOrdem(tpArvore* arvore) {
+void printArvoreEmPosOrdem(tpArvore* arvore) {
 
 	if(arvore == NULL) return;
 
-	printArvoreEmOrdem(arvore->esquerda);
-	printf("\n%d",arvore->item.num);
-	printArvoreEmOrdem(arvore->direita);
+	printArvoreEmPosOrdem(arvore->esquerda);
+	printArvoreEmPosOrdem(arvore->direita);
+	printf("\n%c",arvore->item.letra);
 }
 
 void printArvoreBonita(tpArvore* arvore, int nivel) {
@@ -171,7 +167,7 @@ void printArvoreBonita(tpArvore* arvore, int nivel) {
     for (int i = 0; i < nivel; i++) {
         printf("    ");
     }
-    printf("%d\n", arvore->item.num);
+    printf("%c\n", arvore->item.letra);
 
     printArvoreBonita(arvore->esquerda, nivel + 1);
 }
@@ -190,7 +186,7 @@ tpArvore* procuraMenor(tpArvore* arvore) {
 	return aux1;
 }
 
-int removeArvore(tpArvore** raiz, int valor) {
+int removeArvore(tpArvore** raiz, char valor) {
 
 	if (*raiz == NULL) {
 		return 0;
@@ -198,7 +194,7 @@ int removeArvore(tpArvore** raiz, int valor) {
 
 	int res;
 
-	if (valor < (*raiz)->item.num) {
+	if (valor < (*raiz)->item.letra) {
 		res = removeArvore(&((*raiz)->esquerda), valor);
 		if (res == 1 && verificaFB(*raiz) >= 2) {
 			if (alturaArvore((*raiz)->direita->esquerda) <= alturaArvore((*raiz)->direita->direita)) {
@@ -208,7 +204,7 @@ int removeArvore(tpArvore** raiz, int valor) {
 				*raiz = RSE(*raiz);
 			}
 		}
-	} else if (valor > (*raiz)->item.num) {
+	} else if (valor > (*raiz)->item.letra) {
 		res = removeArvore(&((*raiz)->direita), valor);
 		if (res == 1 && verificaFB(*raiz) <= -2) {
 			if (alturaArvore((*raiz)->esquerda->direita) <= alturaArvore((*raiz)->esquerda->esquerda)) {
@@ -230,7 +226,7 @@ int removeArvore(tpArvore** raiz, int valor) {
 		} else {
 			tpArvore* menor = procuraMenor((*raiz)->direita);
 			(*raiz)->item = menor->item;
-			removeArvore(&((*raiz)->direita), menor->item.num);
+			removeArvore(&((*raiz)->direita), menor->item.letra);
 
 			if (verificaFB(*raiz) <= -2) {
 				if (alturaArvore((*raiz)->esquerda->direita) <= alturaArvore((*raiz)->esquerda->esquerda)) {
