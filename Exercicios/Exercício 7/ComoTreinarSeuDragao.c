@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Celula
-{
-	int dias;
-	int multa;
+struct Celula {
+	unsigned long long dias;
+	unsigned long long multa;
 	float mediaMulta;
 };
 
@@ -75,53 +74,45 @@ int main() {
 
 	int tamanhoAtual = 0;
 	int controle = 0;
-	int memoria = 0;
-	int diasTotais;
-	int diasQuePassou = 0;
-	int dias;
-	int multa;
+	unsigned long long dias;
+	unsigned long long multa;
 	int multaSoma = 0;
-	float multaTotal;
-	dragao dragGenerico;
+	unsigned long long multaTotal = 0;
+	dragao dragInput;
 
-	dragao *vetDragoes = (dragao*)malloc(sizeof(dragao));
+	dragao* vetDragoes = (dragao*)malloc(100000 * sizeof(dragao));
 
-	scanf("%d %d",&dias,&multa);
+    if(vetDragoes == NULL) return 0;
 
-	dragGenerico.dias = dias;
-	dragGenerico.multa = multa;
-	dragGenerico.mediaMulta = ((float) multa) / dias;
 
-	inserirPrio(vetDragoes,dragGenerico,&tamanhoAtual,10000);
+	scanf("%llu %llu",&dias,&multa);
 
-	diasTotais = dragGenerico.dias;
+	dragInput.dias = dias;
+	dragInput.multa = multa;
+	dragInput.mediaMulta = ((float) multa) / dias;
 
-	while (diasQuePassou < diasTotais) {
+	inserirPrio(vetDragoes,dragInput,&tamanhoAtual,100000);
 
+	while (tamanhoAtual > 0)
+	{
 		if(vetDragoes[0].dias == 0) {
 
 			extrairMaxPrio(vetDragoes,&tamanhoAtual);
 			multaSoma -= vetDragoes[0].multa;
 		}
 
-		multaTotal += multaSoma;
+		if(tamanhoAtual > 0) multaTotal += multaSoma;
 
 		if(controle == 0) {
 
-			if(scanf("%d %d",&dias,&multa) == 2) {
+			if(scanf("%llu %llu",&dias,&multa) == 2) {
 
-				dragGenerico.dias = dias;
-				dragGenerico.multa = multa;
-				dragGenerico.mediaMulta = ((float) multa) / dias;
+				dragInput.dias = dias;
+				dragInput.multa = multa;
+				dragInput.mediaMulta = ((float) multa) / dias;
 				multaSoma += multa;
 
-				memoria = tamanhoAtual + 1;
-
-				vetDragoes = realloc(vetDragoes, memoria * sizeof(dragao));
-
-				inserirPrio(vetDragoes,dragGenerico,&tamanhoAtual,10000);
-
-				diasTotais += vetDragoes[tamanhoAtual - 1].dias;
+				inserirPrio(vetDragoes,dragInput,&tamanhoAtual,100000);
 
 			} else {
 
@@ -129,12 +120,11 @@ int main() {
 			}
 		}
 
-		diasQuePassou ++;
-		vetDragoes[0].dias --;
+		if(tamanhoAtual > 0) vetDragoes[0].dias --;
 	}
 
 	free(vetDragoes);
-	printf("%.0lf",multaTotal);
+	printf("%llu\n",multaTotal);
 
 	return 0;
 }
